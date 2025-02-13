@@ -17,7 +17,7 @@ export default function BorrowingClient() {
   const handleBorrow = () => {
     if (selectedItem && borrowerName) {
       // Update the item status to BORROWED
-      const updatedItems = items.map((item) => (item.id === selectedItem ? { ...item, status: "BORROWED" } : item))
+    //   const updatedItems = items.map((item) => (item.id === selectedItem ? { ...item, status: "BORROWED" } : item))
       // Here you would typically update the state and possibly send this to a backend
       console.log(`${borrowerName} borrowed item ${selectedItem}`)
       // Reset form

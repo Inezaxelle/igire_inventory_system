@@ -1,71 +1,86 @@
-import { mockDeep } from "jest-mock-extended";
-import { PrismaClient, Category, Status, Condition } from "@prisma/client";
-import { NextRequest } from "next/server";
+import { mockDeep, MockProxy } from "jest-mock-extended";
+import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
 import { GET, POST } from "./route";
 
-jest.mock("@prisma/client");
+jest.mock("@prisma/client", () => ({
+  PrismaClient: jest.fn(),
+}));
 
-const mockPrisma = mockDeep<PrismaClient>();
+let mockPrisma: MockProxy<PrismaClient>;
+
+beforeEach(() => {
+  mockPrisma = mockDeep<PrismaClient>();
+  (PrismaClient as jest.Mock).mockReturnValue(mockPrisma);
+});
 
 describe("Inventory API", () => {
-  beforeEach(() => {
-    (PrismaClient as jest.Mock).mockImplementation(() => mockPrisma);
-  });
-
   describe("GET", () => {
     it("should return all inventory items", async () => {
       const mockItems = [
         {
           id: "1",
           name: "Item 1",
-          category: Category.DEVICE, // Use Enum
-          status: Status.AVAILABLE, // Use Enum
-          condition: Condition.GOOD, // Use Enum
+          category: "DEVICE",
+          status: "AVAILABLE",
+          condition: "GOOD",
           createdAt: new Date(),
         },
         {
           id: "2",
           name: "Item 2",
-          category: Category.FURNITURE, // Use Enum
-          status: Status.BORROWED, // Use Enum
-          condition: Condition.WORN_OUT, // Use Enum
+          category: "FURNITURE",
+          status: "BORROWED",
+          condition: "WORN_OUT",
           createdAt: new Date(),
         },
       ];
 
-      mockPrisma.inventoryItem.findMany.mockResolvedValue(mockItems);
+      (mockPrisma.inventoryItem.findMany as jest.Mock).mockResolvedValue(
+        mockItems
+      );
 
-      const response = await GET();
+      const response = await GET(mockPrisma);
       const data = await response.json();
 
       expect(response.status).toBe(200);
-      expect(data).toEqual(mockItems);
+      expect(data).toEqual(
+        mockItems.map((item) => ({
+          ...item,
+          createdAt: item.createdAt.toISOString(),
+        }))
+      );
     });
   });
 
   describe("POST", () => {
     it("should create a new inventory item", async () => {
-      const newItem = { name: "New Item", category: Category.DEVICE }; // Use Enum
+      const newItem = { name: "New Item", category: "DEVICE" };
       const createdItem = {
         id: "3",
         ...newItem,
-        status: Status.AVAILABLE, // Use Enum
-        condition: Condition.NEW, // Use Enum
+        status: "AVAILABLE",
+        condition: "NEW",
         createdAt: new Date(),
       };
 
-      mockPrisma.inventoryItem.create.mockResolvedValue(createdItem);
+      (mockPrisma.inventoryItem.create as jest.Mock).mockResolvedValue(
+        createdItem
+      );
 
-      const request = new NextRequest("http://localhost:3000/api/inventory", {
+      const request = new Request("http://localhost:3000/api/inventory", {
         method: "POST",
         body: JSON.stringify(newItem),
       });
 
-      const response = await POST(request);
+      const response = await POST(mockPrisma, request);
       const data = await response.json();
 
       expect(response.status).toBe(201);
-      expect(data).toEqual(createdItem);
+      expect(data).toEqual({
+        ...createdItem,
+        createdAt: createdItem.createdAt.toISOString(),
+      });
     });
   });
 });

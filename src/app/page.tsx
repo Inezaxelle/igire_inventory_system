@@ -10,3 +10,5 @@ export default async function Home() {
 
   return <Dashboard />
 }
+
+// User needs to first sign in before accessing dashboard

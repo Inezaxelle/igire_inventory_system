@@ -1,16 +1,11 @@
-import "./globals.css"
-import { Inter } from "next/font/google"
-import { ClerkProvider } from "@clerk/nextjs"
-import Navigation from "@/components/Navigation"
-import type React from "react" // Added import for React
-
-const inter = Inter({ subsets: ["latin"] })
-
-export const metadata = {
-  title: "Inventory Management System",
-  description: "A simple inventory management system built with Next.js",
-}
-
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
+import './globals.css'
 export default function RootLayout({
   children,
 }: {
@@ -19,9 +14,14 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
-          <Navigation />
-          <main className="container mx-auto mt-4">{children}</main>
+        <body>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          {children}
         </body>
       </html>
     </ClerkProvider>

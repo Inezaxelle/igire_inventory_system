@@ -40,7 +40,8 @@ describe("Inventory API", () => {
         mockItems
       );
 
-      const response = await GET(mockPrisma);
+      // Call the GET function without passing prisma as an argument
+      const response = await GET();
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -73,7 +74,8 @@ describe("Inventory API", () => {
         body: JSON.stringify(newItem),
       });
 
-      const response = await POST(mockPrisma, request);
+      // Call the POST function without passing prisma as an argument
+      const response = await POST(request);
       const data = await response.json();
 
       expect(response.status).toBe(201);

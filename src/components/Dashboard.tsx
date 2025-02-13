@@ -1,29 +1,34 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { AlertCircle } from "lucide-react";
-import Link from "next/link";
+"use client"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import { AlertCircle } from "lucide-react"
+import Link from "next/link"
+import { useInventory } from "@/contexts/InventoryContext"
 
 export default function Dashboard() {
-  // Dummy data for demonstration
-  const stats = {
-    totalItems: 100,
-    availableItems: 80,
-    borrowedItems: 15,
-    damagedItems: 5,
-  };
+  const { items } = useInventory()
 
+  const stats = {
+    totalItems: items.length,
+    availableItems: items.filter((item) => item.status === "AVAILABLE").length,
+    borrowedItems: items.filter((item) => item.status === "BORROWED").length,
+    damagedItems: items.filter((item) => item.status === "DAMAGED").length,
+  }
+
+  // Dummy data for demonstration (you can replace these with real data later)
   const recentActivity = [
     { action: "Borrowed", item: "Laptop", user: "John Doe" },
     { action: "Returned", item: "Chair", user: "Jane Smith" },
     { action: "Added", item: "Projector", user: "Admin" },
-  ];
+  ]
 
   const overdueItems = [
     { item: "Tablet", user: "Alice Johnson", dueDate: "2023-05-01" },
     { item: "Laptop", user: "Bella Ciao", dueDate: "2023-06-01" },
     { item: "Tablet", user: "Niki Minaj", dueDate: "2023-05-03" },
-  ];
+  ]
 
   return (
     <div className="p-6">
@@ -104,5 +109,5 @@ export default function Dashboard() {
         </Card>
       </div>
     </div>
-  );
+  )
 }

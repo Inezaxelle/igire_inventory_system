@@ -25,9 +25,10 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
     condition: "NEW",
   })
 
-  const handleChange = (field: keyof InventoryItem, value: string) => {
-    setItem((prev) => ({ ...prev, [field]: value as any }))
+  const handleChange = <K extends keyof InventoryItem>(field: K, value: InventoryItem[K]) => {
+    setItem((prev) => ({ ...prev, [field]: value }))
   }
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()

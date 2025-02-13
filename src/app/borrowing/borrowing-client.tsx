@@ -8,7 +8,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function BorrowingClient() {
-  const { items, addItem } = useInventory()
+  const { items } = useInventory()
   const [selectedItem, setSelectedItem] = useState("")
   const [borrowerName, setBorrowerName] = useState("")
 

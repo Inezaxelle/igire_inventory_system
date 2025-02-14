@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-import { InventoryItem, Category, Status, Condition } from "@/contexts/InventoryContext"
+import { InventoryItem, Category } from "@/contexts/InventoryContext"
 
 interface AddItemFormProps {
   onItemAdded: (item: Omit<InventoryItem, "id">) => void

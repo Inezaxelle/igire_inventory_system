@@ -1,7 +1,13 @@
 # Inventory Management App Documentation
 
 ## Overview
-The Inventory Management App is a web-based application built using Next.js 15. It allows users to manage inventory items, track borrowed items, and report damaged items. The app includes authentication via Clerk and stores data locally using React context and localStorage.
+The Inventory Management App is a web-based application built using Next.js 15. It allows users to manage inventory items, track borrowed items, and report damaged items. The app includes authentication via Clerk and stores data locally using React Context and localStorage.
+
+### ⚠️ Important: Create at Least 4 Items First!
+Before using features like borrowing and damage reporting, make sure to add at least 4 items to the inventory. This will allow you to:
+✅ Borrow items properly  
+✅ Report damage on different items  
+✅ Observe the dashboard updates more effectively  
 
 ## Features
 - **User Authentication**: Users must sign in before accessing the dashboard.
@@ -11,7 +17,7 @@ The Inventory Management App is a web-based application built using Next.js 15. 
   - Provides charts for inventory statistics.
 - **Inventory Management**:
   - Add new items with details like name, category, status, and condition.
-  - View a list of all inventory items.
+  - View a list of all inventory items on the `/list` page.
 - **Borrowing System**:
   - Borrow available items.
   - Track borrowed items.
@@ -30,17 +36,21 @@ The Inventory Management App is a web-based application built using Next.js 15. 
 ```
 /project-root
 ├── app/
-│   ├── dashboard/
-│   ├── inventory/
-│   ├── borrowing/
-│   ├── damage-reports/
-│   ├── contexts/ (InventoryContext.tsx)
-│   ├── components/ (Shared UI components)
-├── pages/
-├── public/
-├── styles/
-├── package.json
-├── README.md
+│   ├── inventory/           # Add new items
+│   ├── list/                # Lists all inventory items
+│   ├── borrowing/           # Borrow items
+│   ├── damage-reports/      # Report damaged items
+│   ├── contexts/            # React Context for inventory state
+│   │   ├── InventoryContext.tsx
+│   ├── components/          # Shared UI components
+│   │   ├── AddItem.tsx
+│   │   ├── Dashboard.tsx
+│   │   ├── DashboardLayout.tsx
+│   │   ├── Sidebar.tsx
+│   ├── styles/              # Global styles
+│   ├── public/              # Static assets
+│   ├── package.json         # Project dependencies
+│   ├── README.md            # Project documentation
 ```
 
 ## Installation & Setup
@@ -62,39 +72,37 @@ The Inventory Management App is a web-based application built using Next.js 15. 
    ```sh
    npm run dev
    ```
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. Open `http://localhost:3000` in your browser.
 
 ## Usage Guide
-### Adding Inventory Items
-- Navigate to the Inventory page.
-- Fill out the item form and click "Add Item".
-- The item will be stored in localStorage and displayed in the list.
+1️⃣ **Adding Inventory Items**  
+   - Navigate to the Inventory page (`/inventory`).  
+   - Fill out the item form and click "Add Item".  
+   - The item will be stored in localStorage.  
+   - Items are listed on the `/list` page.  
 
-### Borrowing Items
-- Navigate to the Borrowing page.
-- Select an available item and enter the borrower’s name.
-- Click "Borrow Item".
+2️⃣ **Viewing & Managing Items**  
+   - Go to `/list` to see all added inventory items.  
 
-### Reporting Damaged Items
-- Navigate to the Damage Reports page.
-- Select an item and describe the damage.
-- Click "Submit Damage Report".
+3️⃣ **Borrowing Items**  
+   - Navigate to `/borrowing`.  
+   - Select an available item and enter the borrower's name.  
+   - Click "Borrow Item" to change the item's status.  
+
+4️⃣ **Reporting Damaged Items**  
+   - Go to `/damage-reports`.  
+   - Select an item and describe the damage.  
+   - Click "Submit Damage Report".  
+
+5️⃣ **Dashboard Overview**  
+   - View Total Items, Available Items, Borrowed Items, and Damaged Items.  
+   - Check recent activity logs and charts to track trends.  
 
 ## API & Data Handling
 Since the app does not use a backend database, all data is stored in localStorage via React Context.
 
-- **InventoryContext.tsx** handles state management.
+- `InventoryContext.tsx` handles state management.
 - Items are assigned unique IDs using `Date.now().toString()`.
-
-## Deployment
-1. Build the app:
-   ```sh
-   npm run build
-   ```
-2. Deploy using Vercel:
-   ```sh
-   vercel deploy
-   ```
 
 ## Known Issues & Limitations
 - Data persistence is limited to localStorage.
@@ -102,8 +110,7 @@ Since the app does not use a backend database, all data is stored in localStorag
 - No email notifications for borrowed/damaged items.
 
 ## Contributing
-- Fork the repository.
-- Create a new feature branch: `git checkout -b feature-xyz`
-- Commit changes: `git commit -m "Add new feature"`
-- Push to GitHub and submit a pull request.
-
+1. Fork the repository.
+2. Create a new feature branch: `git checkout -b feature-xyz`.
+3. Commit changes: `git commit -m "Add new feature"`.
+4. Push to GitHub and submit a pull request.

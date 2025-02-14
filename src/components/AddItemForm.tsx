@@ -4,36 +4,30 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-import type { Category, Status, Condition } from "@/contexts/InventoryContext"
-
-interface InventoryItem {
-  name: string
-  category: Category
-  status: Status
-  condition: Condition
-}
+import { InventoryItem, Category, Status, Condition } from "@/contexts/InventoryContext"
 
 interface AddItemFormProps {
-  onItemAdded: (item: InventoryItem) => void
+  onItemAdded: (item: Omit<InventoryItem, "id">) => void
 }
 
 export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
-  const [item, setItem] = useState<InventoryItem>({
+  const [item, setItem] = useState<Omit<InventoryItem, "id">>({
     name: "",
     category: "DEVICE",
     status: "AVAILABLE",
     condition: "NEW",
+    serialNumber: "",
+    quantity: 1,
   })
 
-  const handleChange = <K extends keyof InventoryItem>(field: K, value: InventoryItem[K]) => {
+  const handleChange = <K extends keyof Omit<InventoryItem, "id">>(field: K, value: Omit<InventoryItem, "id">[K]) => {
     setItem((prev) => ({ ...prev, [field]: value }))
   }
-  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     onItemAdded(item)
-    setItem({ name: "", category: "DEVICE", status: "AVAILABLE", condition: "NEW" })
+    setItem({ name: "", category: "DEVICE", status: "AVAILABLE", condition: "NEW", serialNumber: "", quantity: 1 })
   }
 
   return (
@@ -44,6 +38,23 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
         onChange={(e) => handleChange("name", e.target.value)}
         placeholder="Item name"
         required
+      />
+
+      <Input
+        type="text"
+        value={item.serialNumber}
+        onChange={(e) => handleChange("serialNumber", e.target.value)}
+        placeholder="Serial Number"
+        required
+      />
+
+      <Input
+        type="number"
+        value={item.quantity}
+        onChange={(e) => handleChange("quantity", parseInt(e.target.value))}
+        placeholder="Quantity"
+        required
+        min="1"
       />
 
       <Select value={item.category} onValueChange={(value) => handleChange("category", value as Category)}>
@@ -86,4 +97,3 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
     </form>
   )
 }
-

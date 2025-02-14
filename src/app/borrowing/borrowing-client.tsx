@@ -8,7 +8,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function BorrowingClient() {
-  const { items } = useInventory()
+  const { items, borrowItem } = useInventory()
   const [selectedItem, setSelectedItem] = useState("")
   const [borrowerName, setBorrowerName] = useState("")
 
@@ -16,18 +16,15 @@ export default function BorrowingClient() {
 
   const handleBorrow = () => {
     if (selectedItem && borrowerName) {
-      // Update the item status to BORROWED
-    //   const updatedItems = items.map((item) => (item.id === selectedItem ? { ...item, status: "BORROWED" } : item))
-      // Here you would typically update the state and possibly send this to a backend
+      borrowItem(selectedItem, borrowerName)
       console.log(`${borrowerName} borrowed item ${selectedItem}`)
-      // Reset form
       setSelectedItem("")
       setBorrowerName("")
     }
   }
 
   return (
-    <div className="p-6">
+    <div className="max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Borrowing</h1>
       <Card className="mb-6">
         <CardHeader>
@@ -39,10 +36,10 @@ export default function BorrowingClient() {
               e.preventDefault()
               handleBorrow()
             }}
-            className="space-y-4"
+            className="space-y-6"
           >
             <Select value={selectedItem} onValueChange={setSelectedItem}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select an item to borrow" />
               </SelectTrigger>
               <SelectContent>
@@ -59,22 +56,24 @@ export default function BorrowingClient() {
               onChange={(e) => setBorrowerName(e.target.value)}
               placeholder="Borrower's name"
               required
+              className="w-full"
             />
-            <Button type="submit">Borrow Item</Button>
+            <Button type="submit" className="w-full">Borrow Item</Button>
           </form>
         </CardContent>
       </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>Currently Borrowed Items</CardTitle>
         </CardHeader>
         <CardContent>
-          <ul>
+          <ul className="space-y-2">
             {items
               .filter((item) => item.status === "BORROWED")
               .map((item) => (
-                <li key={item.id} className="mb-2">
-                  {item.name}
+                <li key={item.id} className="text-sm">
+                  {item.name} - Borrowed by: {item.borrower}
                 </li>
               ))}
           </ul>

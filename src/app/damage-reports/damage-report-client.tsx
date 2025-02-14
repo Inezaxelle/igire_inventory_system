@@ -8,22 +8,21 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function DamageReportClient() {
-  const { items } = useInventory()
+  const { items, reportDamage } = useInventory()
   const [selectedItem, setSelectedItem] = useState("")
   const [damageDescription, setDamageDescription] = useState("")
 
   const handleDamageReport = () => {
     if (selectedItem && damageDescription) {
-      // Log damage report (replace with backend update if needed)
+      reportDamage(selectedItem, damageDescription)
       console.log(`Damage reported for item ${selectedItem}: ${damageDescription}`)
-      // Reset form
       setSelectedItem("")
       setDamageDescription("")
     }
   }
 
   return (
-    <div className="p-6">
+    <div className="max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Damage Reports</h1>
       <Card className="mb-6">
         <CardHeader>
@@ -35,10 +34,10 @@ export default function DamageReportClient() {
               e.preventDefault()
               handleDamageReport()
             }}
-            className="space-y-4"
+            className="space-y-6"
           >
             <Select value={selectedItem} onValueChange={setSelectedItem}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select an item to report" />
               </SelectTrigger>
               <SelectContent>
@@ -54,8 +53,9 @@ export default function DamageReportClient() {
               onChange={(e) => setDamageDescription(e.target.value)}
               placeholder="Describe the damage"
               required
+              className="w-full"
             />
-            <Button type="submit">Submit Damage Report</Button>
+            <Button type="submit" className="w-full">Submit Damage Report</Button>
           </form>
         </CardContent>
       </Card>
@@ -64,12 +64,12 @@ export default function DamageReportClient() {
           <CardTitle>Damaged Items</CardTitle>
         </CardHeader>
         <CardContent>
-          <ul>
+          <ul className="space-y-2">
             {items
               .filter((item) => item.status === "DAMAGED")
               .map((item) => (
-                <li key={item.id} className="mb-2">
-                  {item.name}
+                <li key={item.id} className="text-sm">
+                  {item.name} - Damage: {item.damageDescription}
                 </li>
               ))}
           </ul>

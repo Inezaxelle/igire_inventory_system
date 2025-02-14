@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server"
 import Dashboard from "@/components/Dashboard"
+import { DashboardLayout } from "@/components/DashboardLayout"
 
 export default async function Home() {
   const { userId } = await auth()
@@ -8,7 +9,9 @@ export default async function Home() {
     return <div>Please sign in to access the dashboard.</div>
   }
 
-  return <Dashboard />
+  return (
+    <DashboardLayout>
+      <Dashboard />
+    </DashboardLayout>
+  )
 }
-
-// User needs to first sign in before accessing dashboard

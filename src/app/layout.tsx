@@ -1,7 +1,8 @@
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
 import { InventoryProvider } from "@/contexts/InventoryContext"
+import { DashboardLayout } from "@/components/DashboardLayout"
 import "./globals.css"
-import type React from "react" // Added import for React
+import React from "react"
 
 export default function RootLayout({
   children,
@@ -13,21 +14,24 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <InventoryProvider>
-            <div className="flex flex-col min-h-screen">
-              <header className="p-4 flex justify-end">
-                <SignedOut>
+            <SignedOut>
+              <div className="flex flex-col min-h-screen w-full">
+                <header className="p-4 flex justify-end">
                   <SignInButton />
-                </SignedOut>
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
-              </header>
-              <main className="flex-grow flex items-center justify-center">{children}</main>
-            </div>
+                </header>
+                <main className="flex-grow flex items-center justify-center">
+                  {children}
+                </main>
+              </div>
+            </SignedOut>
+            <SignedIn>
+              <DashboardLayout>
+                {children}
+              </DashboardLayout>
+            </SignedIn>
           </InventoryProvider>
         </body>
       </html>
     </ClerkProvider>
   )
 }
-

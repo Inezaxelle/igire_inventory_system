@@ -1,17 +1,12 @@
 import { auth } from "@clerk/nextjs/server"
-import Dashboard from "@/components/Dashboard"
-import { DashboardLayout } from "@/components/DashboardLayout"
+import DamageReportClient from "./damage-report-client"
 
-export default async function Home() {
+export default async function DamageReportPage() {
   const { userId } = await auth()
 
   if (!userId) {
-    return <div>Please sign in to access the dashboard.</div>
+    return <div>Please sign in to access the damage reports.</div>
   }
 
-  return (
-    <DashboardLayout>
-      <Dashboard />
-    </DashboardLayout>
-  )
+  return <DamageReportClient />
 }

@@ -1,37 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inventory Management App Documentation
 
-## Getting Started
+## Overview
+The Inventory Management App is a web-based application built using Next.js 15. It allows users to manage inventory items, track borrowed items, and report damaged items. The app includes authentication via Clerk and stores data locally using React context and localStorage.
 
-First, run the development server:
+## Features
+- **User Authentication**: Users must sign in before accessing the dashboard.
+- **Dashboard**:
+  - Displays summary cards for total, available, borrowed, and damaged items.
+  - Shows recent activity.
+  - Provides charts for inventory statistics.
+- **Inventory Management**:
+  - Add new items with details like name, category, status, and condition.
+  - View a list of all inventory items.
+- **Borrowing System**:
+  - Borrow available items.
+  - Track borrowed items.
+- **Damage Reports**:
+  - Report damaged items.
+  - View a list of damaged items.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Technology Stack
+- **Framework**: Next.js 15
+- **Authentication**: Clerk
+- **State Management**: React Context API
+- **Storage**: LocalStorage
+- **UI Components**: Tailwind CSS, Lucide Icons
+
+## Project Structure
+```
+/project-root
+├── app/
+│   ├── dashboard/
+│   ├── inventory/
+│   ├── borrowing/
+│   ├── damage-reports/
+│   ├── contexts/ (InventoryContext.tsx)
+│   ├── components/ (Shared UI components)
+├── pages/
+├── public/
+├── styles/
+├── package.json
+├── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation & Setup
+### Prerequisites
+- Node.js installed (v18+ recommended)
+- npm or yarn package manager
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation Steps
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-repo/inventory-management.git
+   cd inventory-management
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Run the development server:
+   ```sh
+   npm run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage Guide
+### Adding Inventory Items
+- Navigate to the Inventory page.
+- Fill out the item form and click "Add Item".
+- The item will be stored in localStorage and displayed in the list.
 
-## Learn More
+### Borrowing Items
+- Navigate to the Borrowing page.
+- Select an available item and enter the borrower’s name.
+- Click "Borrow Item".
 
-To learn more about Next.js, take a look at the following resources:
+### Reporting Damaged Items
+- Navigate to the Damage Reports page.
+- Select an item and describe the damage.
+- Click "Submit Damage Report".
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API & Data Handling
+Since the app does not use a backend database, all data is stored in localStorage via React Context.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **InventoryContext.tsx** handles state management.
+- Items are assigned unique IDs using `Date.now().toString()`.
 
-## Deploy on Vercel
+## Deployment
+1. Build the app:
+   ```sh
+   npm run build
+   ```
+2. Deploy using Vercel:
+   ```sh
+   vercel deploy
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Known Issues & Limitations
+- Data persistence is limited to localStorage.
+- No user roles or permissions.
+- No email notifications for borrowed/damaged items.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-"# igire_inventory_system" 
+## Contributing
+- Fork the repository.
+- Create a new feature branch: `git checkout -b feature-xyz`
+- Commit changes: `git commit -m "Add new feature"`
+- Push to GitHub and submit a pull request.
+

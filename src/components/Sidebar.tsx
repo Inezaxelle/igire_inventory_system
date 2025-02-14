@@ -16,7 +16,7 @@ export function Sidebar() {
       <nav className="space-y-3">
         {[
           { href: "/", label: "Dashboard", icon: Home },
-          { href: "/list", label: "Inventory", icon: Box },
+          { href: "/list", label: "Inventory List", icon: Box },
           { href: "/borrowing", label: "Borrowing", icon: BookOpen },
           { href: "/damage-reports", label: "Damage Reports", icon: AlertTriangle },
           { href: "/inventory", label: "Add Item", icon: PlusCircle },

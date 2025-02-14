@@ -6,26 +6,37 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export default function BorrowingClient() {
   const { items, borrowItem } = useInventory()
   const [selectedItem, setSelectedItem] = useState("")
   const [borrowerName, setBorrowerName] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
 
   const availableItems = items.filter((item) => item.status === "AVAILABLE")
 
   const handleBorrow = () => {
     if (selectedItem && borrowerName) {
       borrowItem(selectedItem, borrowerName)
-      console.log(`${borrowerName} borrowed item ${selectedItem}`)
+      setSuccessMessage(`${borrowerName} successfully borrowed ${selectedItem}`)
       setSelectedItem("")
       setBorrowerName("")
+      setTimeout(() => setSuccessMessage(""), 3000)
     }
   }
 
   return (
     <div className="max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Borrowing</h1>
+
+      {successMessage && (
+        <Alert className="mb-4">
+          <AlertTitle>Success</AlertTitle>
+          <AlertDescription>{successMessage}</AlertDescription>
+        </Alert>
+      )}
+
       <Card className="mb-6">
         <CardHeader>
           <CardTitle>Borrow an Item</CardTitle>

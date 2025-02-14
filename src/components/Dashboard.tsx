@@ -49,7 +49,7 @@ export default function Dashboard() {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold text-gray-800">Dashboard</h2>
         <div className="space-x-2">
-          <Link href="/inventory/add">
+          <Link href="/inventory">
             <Button>
               <Plus size={16} className="mr-2" /> Add Item
             </Button>

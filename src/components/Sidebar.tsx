@@ -9,7 +9,7 @@ export function Sidebar() {
           <Home className="w-5 h-5" />
           <span>Dashboard</span>
         </Link>
-        <Link href="/inventory" className="flex items-center space-x-2 px-4 py-2.5 rounded transition duration-200 hover:bg-gray-700">
+        <Link href="/list" className="flex items-center space-x-2 px-4 py-2.5 rounded transition duration-200 hover:bg-gray-700">
           <Box className="w-5 h-5" />
           <span>Inventory</span>
         </Link>

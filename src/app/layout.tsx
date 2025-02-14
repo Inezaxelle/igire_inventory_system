@@ -1,4 +1,4 @@
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
+import { ClerkProvider, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 import { InventoryProvider } from "@/contexts/InventoryContext"
 import { DashboardLayout } from "@/components/DashboardLayout"
 import "./globals.css"

@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import Dashboard from "@/components/Dashboard";
-import { DashboardLayout } from "@/components/DashboardLayout";
+// import { DashboardLayout } from "@/components/DashboardLayout";
 
 export default async function Home() {
   const { userId } = await auth();
